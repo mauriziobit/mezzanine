@@ -25,6 +25,19 @@ if settings.USE_MODELTRANSLATION:
 User = get_user_model()
 
 
+class TabbedTranslationAdmin(TranslationAdmin):
+    class Media:
+        js = (
+            'modeltranslation/js/force_jquery.js',
+            #'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/jquery-ui.min.js',
+            'http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js',
+            'modeltranslation/js/tabbed_translation_fields.js',
+        )
+        css = {
+            'screen': ('modeltranslation/css/tabbed_translation_fields.css',),
+        }
+
+
 class DisplayableAdminForm(ModelForm):
 
     def clean_content(form):
@@ -37,7 +50,7 @@ class DisplayableAdminForm(ModelForm):
 
 
 class BaseTranslationModelAdmin(settings.USE_MODELTRANSLATION and
-        TranslationAdmin or admin.ModelAdmin):
+        TabbedTranslationAdmin or admin.ModelAdmin):
     """
     Abstract class used to factorize the switch between translation
     and no-translation class logic.
